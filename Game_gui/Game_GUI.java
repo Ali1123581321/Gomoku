@@ -32,9 +32,9 @@ public class Game_GUI extends JPanel implements Observer{
     private JButton end_game_button;
     private JLabel message_label;
     private SpringLayout layout;
-    private JLabel com_count_label;
-    private JLabel p1_count_label;
-    private JLabel p2_count_label;
+    private JLabel com_count_label = new JLabel();
+    private JLabel p1_count_label = new JLabel();
+    private JLabel p2_count_label = new JLabel();
 
 
     public Game_GUI(){
@@ -126,8 +126,9 @@ public class Game_GUI extends JPanel implements Observer{
             @Override
             public void actionPerformed(ActionEvent e) {
                 game_state.change_state(States.PVP);
+                frame.remove(com_count_label);
+                frame.remove(p2_count_label);
                 p2_count_init();
-                com_count_label = null;
             }
         };pvp_button.addActionListener(pvp_action);
         AbstractAction pvc_action = new AbstractAction() {
@@ -135,7 +136,8 @@ public class Game_GUI extends JPanel implements Observer{
             @Override
             public void actionPerformed(ActionEvent e) {
                 game_state.change_state(States.PVC);
-                p2_count_label = null;
+                frame.remove(com_count_label);
+                frame.remove(p2_count_label);
                 com_count_init();
             }            
         };pvc_button.addActionListener(pvc_action);

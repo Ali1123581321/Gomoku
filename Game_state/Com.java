@@ -13,7 +13,6 @@ import Game_state.Board.square_state;
 public class Com extends Player implements Observer{
     private Board tmp_board;
     private Node root;
-    boolean my_turn = false;
     public Com(Board tmp_board){
         super(square_state.COM);
         this.tmp_board = tmp_board;
