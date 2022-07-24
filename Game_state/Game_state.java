@@ -12,7 +12,7 @@ public class Game_state extends Observable{
     private Board board;
     public String message;
     private Player turn;
-    private int DEFAULT_INROW = 5;
+    private int DEFAULT_INROW = 3;
     private int com_win = 0; private int p1_win = 0; private int p2_win = 0;
     public String com_wins = "com: " + com_win; public String p1_wins = "p1: "+ p1_win; public String p2_wins = "p2: " + p2_win;
 
@@ -67,9 +67,7 @@ public class Game_state extends Observable{
         }else if(this.state == States.PVC){
             if(this.turn == this.com){
                 move_and_reverse_turns(x, y, this.p1);
-                this.com.my_turn = false;
             }else{
-                this.com.my_turn = true;
                 move_and_reverse_turns(x, y, this.com);
             }
         }else{

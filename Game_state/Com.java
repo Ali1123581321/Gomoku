@@ -22,8 +22,7 @@ public class Com extends Player implements Observer{
 
     @Override
     public void update(Observable o, Object arg){
-        if(my_turn)
-            ((Game_state) o).move(0, 0);
+        
     }
     private class Node{
         enum GAME_STATE {WON, LOSE, DRAW, UNDEFINED};

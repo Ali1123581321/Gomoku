@@ -25,7 +25,7 @@ public class Game_GUI extends JPanel implements Observer{
     private JFrame frame;
     private Game_panel panel;
     private final int square_size = 20;
-    private int DEFAULT_SIZE = 5;
+    private int DEFAULT_SIZE = 3;
     private MouseInputListener mouse_handler;
     private JButton pvp_button;
     private JButton pvc_button;
