@@ -192,14 +192,13 @@ public class Com extends Player implements Observer{
         }
     }
     void find_best_move(){
-        //if(root.childeren.isEmpty()){
-            this.root = new Node(null);
+        if(root.childeren.isEmpty()){
             this.root.origin_states = tmp_board.get_grid();
             this.root.clone_states = tmp_board.get_grid();
             build_base_nodes(this.root);
-        //}else{
-          //  root = root.childeren.get((String.valueOf(tmp_board.get_last_move()[0] + String.valueOf(tmp_board.get_last_move()[1]))));
-        //}
+        }else{
+            root = root.childeren.get((String.valueOf(tmp_board.get_last_move()[0] + String.valueOf(tmp_board.get_last_move()[1]))));
+        }
         run_simulation(root);
         double tmp_score; double max_score = -1;
         Node tmp_node; Node result_node = root;
@@ -218,7 +217,7 @@ public class Com extends Player implements Observer{
                     }
                 }
             }
-        }//root = result_node;
+        }root = result_node;
         tmp_board.move(result_node.first_move[1], result_node.first_move[0], result_node.p);
     }
 } 
