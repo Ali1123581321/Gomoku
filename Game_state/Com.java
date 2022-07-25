@@ -13,11 +13,8 @@ import Game_state.Board.square_state;
 public class Com extends Player implements Observer{
     private Board tmp_board;
     private Node root;
-    private HashMap<String, Node> memory;
-    boolean start_over = true;
     public Com(Board tmp_board){
         super(square_state.COM);
-        this.memory = new HashMap<>();
         this.tmp_board = tmp_board;
         root = new Node(null);
     }
@@ -187,36 +184,22 @@ public class Com extends Player implements Observer{
     void run_simulation(Node node){
         long start_time = System.currentTimeMillis();
         while(System.currentTimeMillis() - start_time < 1000){
+        //for(int i = 0; i < 10000; i++){
             Node parent = selection(node, 0);
             Node expansion_node = expand(parent);
             int result = simulate(expansion_node);
             propogate(expansion_node, result);
         }
     }
-
-    void init_node(){
-        Node tmp_node = new Node(null);
-        tmp_node.origin_states = tmp_board.get_grid();
-        tmp_node.clone_states = tmp_board.get_grid();
-        build_base_nodes(tmp_node);
-        memory.put(String.valueOf(tmp_board.get_last_move()[0]) + String.valueOf(tmp_board.get_last_move()[1]), tmp_node);
-        root = tmp_node;
-    }
-
     void find_best_move(){
-        if(memory.isEmpty()){
-            init_node();
-            start_over = false;
-        }else if(start_over){
-            if(memory.containsKey(String.valueOf(tmp_board.get_last_move()[0]) + String.valueOf(tmp_board.get_last_move()[1])))
-                this.root = memory.get(String.valueOf(tmp_board.get_last_move()[0]) + String.valueOf(tmp_board.get_last_move()[1]));
-            else{
-                init_node();
-            }
-            start_over = false;
-        }else{
-            root = root.childeren.get(String.valueOf(tmp_board.get_last_move()[0]) + String.valueOf(tmp_board.get_last_move()[1]));
-        }
+        //if(root.childeren.isEmpty()){
+            this.root = new Node(null);
+            this.root.origin_states = tmp_board.get_grid();
+            this.root.clone_states = tmp_board.get_grid();
+            build_base_nodes(this.root);
+        //}else{
+          //  root = root.childeren.get((String.valueOf(tmp_board.get_last_move()[0] + String.valueOf(tmp_board.get_last_move()[1]))));
+        //}
         run_simulation(root);
         double tmp_score; double max_score = -1;
         Node tmp_node; Node result_node = root;
@@ -235,7 +218,7 @@ public class Com extends Player implements Observer{
                     }
                 }
             }
-        }root = result_node;
+        }//root = result_node;
         tmp_board.move(result_node.first_move[1], result_node.first_move[0], result_node.p);
     }
 } 

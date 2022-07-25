@@ -43,8 +43,8 @@ public class Game_state extends Observable{
             board.clear_grid();
             this.state = new_state;
             this.p1 = new Player(square_state.P1);
-            //this.com = new Com(this.board);
-            this.com.start_over = true;
+            this.com = new Com(this.board);
+            //this.com.start_over = true;
             this.addObserver(this.com);
             p2_win = 0;
             turn = p1;
