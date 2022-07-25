@@ -13,11 +13,11 @@ import Game_state.Board.square_state;
 public class Com extends Player implements Observer{
     private Board tmp_board;
     private Node root;
-    private HashMap<String, Node> memory;
     boolean start_over = true;
+    private HashMap<String, Node> memory;
     public Com(Board tmp_board){
         super(square_state.COM);
-        this.memory = new HashMap<>();
+        memory = new HashMap<>();
         this.tmp_board = tmp_board;
         root = new Node(null);
     }
@@ -193,29 +193,27 @@ public class Com extends Player implements Observer{
             propogate(expansion_node, result);
         }
     }
-
-    void init_node(){
+    private void init_node(){
         Node tmp_node = new Node(null);
         tmp_node.origin_states = tmp_board.get_grid();
         tmp_node.clone_states = tmp_board.get_grid();
         build_base_nodes(tmp_node);
-        memory.put(String.valueOf(tmp_board.get_last_move()[0]) + String.valueOf(tmp_board.get_last_move()[1]), tmp_node);
+        memory.put((String.valueOf(tmp_board.get_last_move()[0])) + (String.valueOf(tmp_board.get_last_move()[1])), tmp_node);
         root = tmp_node;
     }
-
     void find_best_move(){
         if(memory.isEmpty()){
             init_node();
             start_over = false;
         }else if(start_over){
-            if(memory.containsKey(String.valueOf(tmp_board.get_last_move()[0]) + String.valueOf(tmp_board.get_last_move()[1])))
-                this.root = memory.get(String.valueOf(tmp_board.get_last_move()[0]) + String.valueOf(tmp_board.get_last_move()[1]));
-            else{
+            if(memory.containsKey((String.valueOf(tmp_board.get_last_move()[0])) + (String.valueOf(tmp_board.get_last_move()[1])))){
+                this.root = memory.get((String.valueOf(tmp_board.get_last_move()[0])) + (String.valueOf(tmp_board.get_last_move()[1])));
+            }else{
                 init_node();
             }
             start_over = false;
         }else{
-            root = root.childeren.get(String.valueOf(tmp_board.get_last_move()[0]) + String.valueOf(tmp_board.get_last_move()[1]));
+            this.root = root.childeren.get((String.valueOf(tmp_board.get_last_move()[0])) + (String.valueOf(tmp_board.get_last_move()[1])));
         }
         run_simulation(root);
         double tmp_score; double max_score = -1;
