@@ -19,6 +19,7 @@ public class Game_state extends Observable{
     public Game_state(int size){
         this.board = new Board(size, DEFAULT_INROW);
         this.state = States.NO_GAME_STARTED;
+        this.com = new Com(this.board);
         this.setChanged();
         this.notifyObservers();
     }
@@ -42,7 +43,8 @@ public class Game_state extends Observable{
             board.clear_grid();
             this.state = new_state;
             this.p1 = new Player(square_state.P1);
-            this.com = new Com(this.board);
+            //this.com = new Com(this.board);
+            this.com.start_over = true;
             this.addObserver(this.com);
             p2_win = 0;
             turn = p1;
